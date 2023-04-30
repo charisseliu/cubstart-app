@@ -63,37 +63,33 @@ struct LogInPage: View {
                     .background(Color.black.opacity(0.05))
                     .cornerRadius(15)
                 
-                TextField("Password", text: $password)
+                SecureField("Password", text: $password)
                     .padding()
                     .frame(width: 300, height: 50)
                     .background(Color.black.opacity(0.05))
                     .cornerRadius(15)
                 
-                
-                NavigationStack {
-                           VStack {
-
-                              Button {
-                                  authenticate(username: username, password: password)
-                                 print(username)
-                                  print(password)
-                                  
-                              } label: {
-                                  Text("Go!")
-                              }
-                              .foregroundColor(.white)
-                              .frame(width: 300, height: 50)
-                              .background(Color.green)
-                              .cornerRadius(10)
-                          }
-                           .navigationDestination(isPresented: $successfulLogIn) {
-                               EmptyView()
-                          }
-                       }
+                VStack {
+                    
+                    Button {
+                        authenticate(username: username, password: password)
+                        print(username)
+                        print(password)
+                        
+                    } label: {
+                        Text("Go!")
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: 300, height: 50)
+                    .background(Color.green)
+                    .cornerRadius(10)
+                }
+                    NavigationLink (destination: CalendarPage(), isActive: $successfulLogIn){
+                        EmptyView()
+                    }
+                }
             }
         }
-    }
-    
     func authenticate(username: String, password: String) {
         if (username.lowercased() == "cindy") {
             if (password.lowercased() == "password") {
@@ -108,3 +104,44 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct CalendarPage: View {
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                CalendarView(interval: DateInterval(start: .distantPast, end: .distantFuture))
+                    .navigationTitle("Your Calendar")
+            }
+        }
+    }
+}
+
+struct CalendarView: UIViewRepresentable {
+    let interval: DateInterval
+    
+    func makeUIView(context: Context) -> some UICalendarView {
+        let view = UICalendarView()
+        view.calendar = Calendar(identifier: .gregorian)
+        view.availableDateRange = interval
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+    }
+}
+
+struct EventView: View {
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                CalendarView (interval: DateInterval(start: .distantPast, end: .distantFuture))
+            }
+        }
+    }
+}
+
+@MainActor class Decoration: NSObject {
+    // static func image(UIImage?, color: ColorPicker, size: UICalendarView.DecorationSize) -> UICalendarView.Decoration {
+        
+}
+ 
