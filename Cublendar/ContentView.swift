@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  Cublendar
 //
-//  Created by Charisse Liu on 4/9/23.
+//  Created by Yifei Xu on 4/20/23.
 //
 
 import SwiftUI
